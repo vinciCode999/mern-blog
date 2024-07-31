@@ -1,9 +1,35 @@
 import { Button, Label, TextInput } from 'flowbite-react'
-import React from 'react'
+import React, {useState} from 'react'
 import { Link } from 'react-router-dom'
 
 
 export default function Signup() {
+  const [formData, setFormData] = useState({
+    username: "",
+    email: "",
+    password: ""
+  })
+
+  const handleChange = (e)=>{
+    setFormData((prev)=>({...prev, [e.target.id]: e.target.value}))
+  }
+
+  const handleSubmit = async(e)=>{
+    e.preventDefault()
+    try{
+      const res = await fetch('/api/auth/sign-up', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(formData)
+      })
+
+      const data = await res.json()
+      console.log(data)
+    }catch(error){
+      console.log(error)
+    }
+  
+  }
   return (
     <div className='min-h-screen mt-20'>
       <div className="flex p-3 max-w-3xl mx-auto flex-col md:flex-row
@@ -29,13 +55,14 @@ export default function Signup() {
 
         {/* right */}
         <div className="flex-1">
-          <form className='flex  flex-col gap-4'>
+          <form className='flex  flex-col gap-4' onSubmit={handleSubmit}>
             <div>
               <Label value="Your Username"/>
               <TextInput
                 type="text"
                 id="username"
                 placeholder='username'
+                onChange={handleChange}
               /> 
             </div>
 
@@ -45,6 +72,7 @@ export default function Signup() {
                 type='email'
                 placeholder='name@company.com'
                 id="email"
+                onChange={handleChange}
               /> 
             </div>
 
@@ -54,9 +82,10 @@ export default function Signup() {
                 type="password"
                 placeholder='password'
                 id="password"
+                onChange={handleChange}
               /> 
             </div>
-            <Button gradientDuoTone='purpleToPink'>
+            <Button gradientDuoTone='purpleToPink' type="submit">
               Sign Up
             </Button>
           </form>
