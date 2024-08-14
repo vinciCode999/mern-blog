@@ -4,13 +4,15 @@ import mongoose from 'mongoose';
 import userRouter from './routes/user.route.js';
 import authRouter from './routes/auth.routes.js';
 import bodyParser from 'body-parser';
+import cors from 'cors'
 dotenv.config()
 
 const app = express();
 const port = process.env.PORT || 3000; // Default to port 3000 if PORT is not defined
 const mongodbUri = process.env.MONGODBURI;
 
-app.use(bodyParser.json())
+app.use(cors())
+app.use(bodyParser.json())  
 app.use(express.urlencoded({extended: false}))
 app.use('/api/user',userRouter)
 app.use('/api/auth', authRouter)

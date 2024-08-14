@@ -1,7 +1,7 @@
 import React from 'react'
 import {BrowserRouter, Routes, Route} from 'react-router-dom'
 import { About, Dashboard, Projects, Home, Signin, Signup } from './pages'
-import { Header } from './layouts'
+import { Header, FooterComponent } from './layouts'
 
 function App() {
   return (
@@ -16,6 +16,7 @@ function App() {
         <Route path="/sign-up" element={<Signup/>}/>
         <Route path="*" element={<h1>page not found!!!</h1>}/>
       </Routes>
+      <FooterComponent/>
     </BrowserRouter>
   )
 }
