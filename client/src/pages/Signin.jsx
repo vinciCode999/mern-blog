@@ -1,12 +1,14 @@
 import { Alert, Button, Label, Spinner, TextInput } from 'flowbite-react';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import {useDispatch, useSelector} from 'react-redux'
+import { signInStart, signInSuccess, signInFailure } from '../app/user/userSlice';
 
 export default function Signin() {
   const navigate = useNavigate()
   const [formData, setFormData] = useState({});
-  const [errorMessage, setErrorMessage] = useState(null);
-  const [loading, setLoading] = useState(false);
+  const dispatch = useDispatch()
+  const {loading, error: errorMessage} = useSelector(state=>state.user)
 
   const handleChange = (e) => {
     setFormData((prev) => ({ ...prev, [e.target.id]: e.target.value.trim() }));
@@ -15,26 +17,25 @@ export default function Signin() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!formData.email || !formData.password) {
-      return setErrorMessage('Please fill all fields');
+      return dispatch(signInFailure('please fill all fields'))
     }
     try {
-      setLoading(true);
-      setErrorMessage(null);
+      dispatch(signInStart())
       const res = await fetch('/api/auth/signin', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),
       });
       const data = await res.json();
-      setLoading(false);
+
       if (!res.ok) {
-        throw new Error(data.message || 'Something went wrong');
+        dispatch(signInFailure(data.message))
       }
       // handle successful signup (e.g., redirect, show success message)
+      dispatch(signInSuccess(data))
       navigate('/')
     } catch (error) {
-      setErrorMessage(error.message);
-      setLoading(false);
+      dispatch(signInFailure(error.message))
     }
   };
   return (
