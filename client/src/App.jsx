@@ -1,7 +1,7 @@
 import React from 'react'
 import {BrowserRouter, Routes, Route} from 'react-router-dom'
 import { About, Dashboard, Projects, Home, Signin, Signup } from './pages'
-import { Header, FooterComponent } from './layouts'
+import { Header, FooterComponent, PrivateRoute } from './layouts'
 
 function App() {
   return (
@@ -10,7 +10,9 @@ function App() {
       <Routes>
         <Route path="/" element={<Home/>}/>
         <Route path="/about" element={<About/>}/>
-        <Route path="/dashboard" element={<Dashboard/>}/>
+        <Route element={<PrivateRoute/>}>
+          <Route path="/dashboard" element={<Dashboard/>}/>
+        </Route>
         <Route path="/projects" element={<Projects/>}/>
         <Route path="/sign-in" element={<Signin/>}/>
         <Route path="/sign-up" element={<Signup/>}/>
