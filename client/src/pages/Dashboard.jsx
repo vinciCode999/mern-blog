@@ -5,11 +5,10 @@ import { DashSidebar, DashProfile } from '../layouts';
 export default function Dashboard() {
   //useLocation returns an object that represents the current URL
   const location = useLocation();
-  console.log(location)
   const [tab, setTab] = useState("")
 
   useEffect(()=>{
-    //ocation.search contains the query string of the URL (everything after the ?).
+    //Location.search contains the query string of the URL (everything after the ?)
     const urlParams = new URLSearchParams(location.search)
     const tabFromUrl = urlParams.get('tab')
     if(tabFromUrl){
@@ -23,7 +22,6 @@ export default function Dashboard() {
       <div className="md:w-56">
         <DashSidebar/>
       </div>
-
       {/* profile.. */}
       <div className="">
         {tab === 'profile' && <DashProfile/>}
