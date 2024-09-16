@@ -11,8 +11,8 @@ const firebaseConfig = {
   authDomain: "mern-blog-i610.firebaseapp.com",
   projectId: "mern-blog-i610",
   storageBucket: "mern-blog-i610.appspot.com",
-  messagingSenderId: "388858557362",
-  appId: "1:388858557362:web:5a990e7af3a7e5fc496aab"
+  messagingSenderId: import.meta.env.FIREBASE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.FIREBASE_APP_ID
 };
 
 // Initialize Firebase
