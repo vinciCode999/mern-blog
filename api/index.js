@@ -5,6 +5,7 @@ import userRouter from './routes/user.route.js';
 import authRouter from './routes/auth.routes.js';
 import bodyParser from 'body-parser';
 import cors from 'cors'
+import cookieParser from 'cookie-parser';
 dotenv.config()
 
 const app = express();
@@ -14,6 +15,8 @@ const mongodbUri = process.env.MONGODBURI;
 app.use(cors())
 app.use(bodyParser.json())  
 app.use(express.urlencoded({extended: false}))
+app.use(cookieParser())
+
 app.use('/api/user',userRouter)
 app.use('/api/auth', authRouter)
 
