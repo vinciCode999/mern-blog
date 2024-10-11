@@ -58,4 +58,20 @@ const updateUser =async(req, res, next)=>{
   console.log('req.user: ', req.user)
   console.log(req.params)
 }
-export {test, updateUser}
+
+const deleteUser = async(req, res, next)=>{
+  if(req.user.id !== req.params.userId){
+    return next(errorHandler(403, "you can not delete this User"))
+  }
+  try{
+    const userToBeDeleted = await User.findOne({_id: req.params.userId})
+    if(!userToBeDeleted){
+      return next(errorHandler(404, "user not found"))
+    }
+    await User.findByIdAndDelete({_id: req.params.userId})
+    res.status(200).json("user deleted")
+  }catch(error){
+    next(error)
+  }
+}
+export {test, updateUser, deleteUser}

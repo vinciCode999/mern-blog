@@ -125,7 +125,16 @@ export default function DashProfile() {
       }
     )
   }
-
+  const handleDeleteUser = async()=>{
+    try {
+      const res = await fetch(`/api/user/delete/${currentUser._id}`,{
+        method: "DELETE"
+      })
+      console.log(res)
+    } catch (error) {
+      console.log(error)
+    }
+  }
   return (
   <div className='max-w-lg mx-auto p-3 w-full'>
     <h1 className='my-7 font-semibold text-3xl text-center'>Profile</h1>
@@ -201,7 +210,7 @@ export default function DashProfile() {
       </Button>
     </form>
     <div className='flex justify-between mt-5'>
-      <span className='text-red-600 cursor-pointer'>Delete account</span>
+      <span className='text-red-600 cursor-pointer' onClick={handleDeleteUser}>Delete account</span>
       <span className='text-red-600 cursor-pointer'>Sign Out</span>
     </div>
     {
